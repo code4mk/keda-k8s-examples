@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: nginx-scaler
+  namespace: backend-project
+spec:
+  scaleTargetRef:
+    name: nginx-app
+  minReplicaCount: 2
+  maxReplicaCount: 10
+  pollingInterval: 15
+  cooldownPeriod: 10
+  triggers:
+    - type: cron
+      metadata:
+        timezone: "Asia/Dhaka"
+        start: "40 22 * * 6" # 10:40 PM || Saturday
+        end: "45 22 * * 6" # 10:45 PM || Saturday
+        desiredReplicas: "8"
